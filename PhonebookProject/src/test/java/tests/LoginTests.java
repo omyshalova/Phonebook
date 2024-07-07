@@ -14,6 +14,7 @@ public class LoginTests extends TestBase{
         }
     }
 
+    //Positive tests
     @Test
     public void loginSuccess(){
         app.getHelperUser().openLoginRegistrationForm();
@@ -32,6 +33,7 @@ public class LoginTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isLogged());
     }
 
+    //Negative tests
     @Test
     public void loginWrongEmail(){
         app.getHelperUser().openLoginRegistrationForm();
@@ -42,16 +44,22 @@ public class LoginTests extends TestBase{
 
     }
 
+    @Test
     public void voidloginWrongPassword(){
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("testolga@gmail.com", "Test");
         app.getHelperUser().submitLogin();
+
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
 
+    @Test
     public void  loginUnregisteredUser(){
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("tutu@gmail.com", "Tutu1101!");
         app.getHelperUser().submitLogin();
+
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
 
 }
