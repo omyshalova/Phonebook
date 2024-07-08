@@ -1,6 +1,7 @@
 package tests;
 
 import manager.ApplicationManager;
+import models.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -60,6 +61,11 @@ public class LoginTests extends TestBase{
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+
     }
+
+
+
+
 
 }

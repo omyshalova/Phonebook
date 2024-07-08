@@ -1,5 +1,6 @@
 package manager;
 
+import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -8,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
     WebDriver wd;
     HelperUser helperUser;
+    User user;
 
     public void init(){
         wd = new ChromeDriver();
@@ -24,5 +26,9 @@ public class ApplicationManager {
 
     public HelperUser getHelperUser() {
         return helperUser;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
