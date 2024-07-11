@@ -29,11 +29,24 @@ public class HelperUser extends HelperBase{
         click(By.xpath("//button[@name='login']"));
     }
 
+    public void submitRegistration(){
+        click(By.xpath("//button[@name='registration']"));
+    }
+
     public boolean isLogged() {
         return isElementPresent(By.xpath("//button[text()='Sign Out']"));
     }
 
+    public boolean isRegistered() {
+        return isElementPresent(By.xpath("//a[text()='CONTACTS']"));
+    }
+
     public void loggout() {
         click(By.xpath("//button[text()='Sign Out']"));
+    }
+
+    public String getMessage(){
+        pause(1000);
+        return wd.findElement(By.xpath("//h1[text()=' No Contacts here!']")).getText();
     }
 }
