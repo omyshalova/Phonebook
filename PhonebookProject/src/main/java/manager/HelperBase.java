@@ -44,9 +44,6 @@ public class HelperBase {
             System.out.println(alert.getText());
             pause(5000);
             alert.accept();
-            //click ok = ---> alert.accept();
-            //click cancel ---> alert.dismis();
-            //type into alert ---> alert.sendKeys();
             return true;
         }
         return false;
