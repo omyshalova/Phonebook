@@ -13,8 +13,8 @@ import lombok.ToString;
 public class Contact {
     private String Name;
     private String lastName;
-    private int phone;
+    private String phone;
     private String email;
     private String address;
-    private int description;
+    private String description;
 }

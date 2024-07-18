@@ -1,5 +1,6 @@
 package manager;
 
+import models.Contact;
 import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,8 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
     WebDriver wd;
+
     HelperUser helperUser;
     User user;
+
+    Contact contact;
+    HelperContact helperContact;
 
     public void init(){
         wd = new ChromeDriver();
@@ -17,6 +22,7 @@ public class ApplicationManager {
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.navigate().to("https://telranedu.web.app/home");
         helperUser = new HelperUser(wd);
+        helperContact = new HelperContact(wd);
     }
 
     public void stop(){
@@ -28,7 +34,7 @@ public class ApplicationManager {
         return helperUser;
     }
 
-    public User getUser() {
-        return user;
+    public HelperContact getHelperContact() {
+        return helperContact;
     }
 }
