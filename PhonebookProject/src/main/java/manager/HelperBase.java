@@ -19,8 +19,8 @@ public class HelperBase {
     public void type(By locator, String text){
         WebElement element = wd.findElement(locator);
         element.click();
-//        element.clear();
-//        clearNew(element);
+        element.clear();
+        clearNew(element);
         clearTextField(locator);
         if (text!=null) {
             element.sendKeys(text);
@@ -70,5 +70,9 @@ public class HelperBase {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void refresh(){
+        wd.navigate().refresh();
     }
 }

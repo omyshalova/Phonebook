@@ -11,9 +11,6 @@ public class ApplicationManager {
     WebDriver wd;
 
     HelperUser helperUser;
-    User user;
-
-    Contact contact;
     HelperContact helperContact;
 
     public void init(){
@@ -27,7 +24,6 @@ public class ApplicationManager {
 
     public void stop(){
 //        wd.quit();
-
     }
 
     public HelperUser getHelperUser() {
