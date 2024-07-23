@@ -21,6 +21,8 @@ dependencies {
 
     implementation 'com.github.javafaker:javafaker:1.0.2'
 
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+
 }
 
 test {

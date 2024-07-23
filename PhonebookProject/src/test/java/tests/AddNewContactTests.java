@@ -9,6 +9,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Random;
+
 public class AddNewContactTests extends TestBase{
 
     SoftAssert softAssert = new SoftAssert();
@@ -86,6 +88,7 @@ public class AddNewContactTests extends TestBase{
 
     @Test
     public void addNewContactEmptyName(){
+        int i = new Random().nextInt(1000);
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
         Faker faker = new Faker();
         String firstName = "";
@@ -106,6 +109,7 @@ public class AddNewContactTests extends TestBase{
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
+        app.getHelperContact().getScreen("src/test/screenshorts/screen-1" + i + ".png");
         app.getHelperContact().saveContact();
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
