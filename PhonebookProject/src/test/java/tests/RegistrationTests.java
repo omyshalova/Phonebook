@@ -2,16 +2,24 @@ package tests;
 
 import models.User;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class RegistrationTests extends TestBase{
 
+    @BeforeClass
+    public void logClassActions(){
+        logger.info("Actions: open, fill, submit registration form");
+    }
+
     @BeforeMethod
     public void preCondition() {
         if (app.getHelperUser().isLogged()) {
-            app.getHelperUser().loggout();
+            app.getHelperUser().logout();
+            logger.info("Precondition method was done: logged out of the system");
         }
+        logger.info("Precondition: not logged in the system");
     }
 
     //Positive tests
@@ -23,6 +31,8 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith" + i + "@gmail.com")
                 .withPassword("Smith1235813!");
 
+        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
@@ -30,6 +40,9 @@ public class RegistrationTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isRegistered());
         Assert.assertEquals(app.getHelperUser().getMessage() ,"No Contacts here!");
         Assert.assertTrue(app.getHelperUser().isNoContactMessagePresent());
+
+        logger.info("Assert1: Contact button is present");
+        logger.info("Assert2: Message 'No Contacts here!' is present");
 
     }
 
@@ -41,11 +54,15 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith" + i + "@gmail.com")
                 .withPassword("Smith1235813!");
 
+        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
 
         Assert.assertTrue(app.getHelperUser().isRegistered());
+
+        logger.info("Assert: Contact button is present");
 
     }
 

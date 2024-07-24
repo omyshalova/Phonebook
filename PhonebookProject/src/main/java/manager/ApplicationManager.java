@@ -19,17 +19,22 @@ public class ApplicationManager {
 
     public void init(){
         wd = new ChromeDriver();
-        logger.info("All tests run in Chrome Browser");
+
+        logger.info("START: All tests are done in Chrome Browser");
+
         wd.manage().window().maximize();
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.navigate().to("https://telranedu.web.app/home");
-        logger.info("The link --->" + wd.getCurrentUrl());
+
+        logger.info("The link: " + wd.getCurrentUrl());
+
         helperUser = new HelperUser(wd);
         helperContact = new HelperContact(wd);
     }
 
     public void stop(){
-//        wd.quit();
+        wd.quit();
+        logger.info("END");
     }
 
     public HelperUser getHelperUser() {
