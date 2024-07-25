@@ -17,10 +17,14 @@ public class AddNewContactTests extends TestBase{
 
     @BeforeClass
     public void preCondition(){
+        logger.info("Actions: open, fill, save contact form");
         if (!app.getHelperUser().isLogged()){
             app.getHelperUser().login(new User().withEmail("testolga@gmail.com").withPassword("Test1101!"));
+            logger.info("Precondition method was done: logged in the system");
         }
+        logger.info("Precondition: logged in the system");
     }
+
 
     //POSITIVE
 
@@ -47,12 +51,21 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
+        logContact(contact);
+
         softAssert.assertTrue(app.getHelperContact().isContactAddedByName(contact.getName()));
         softAssert.assertTrue(app.getHelperContact().isContactAddedByPhone(contact.getPhone()));
         softAssert.assertTrue(app.getHelperContact().isContactAddedByNameList(contact.getName()));
         softAssert.assertTrue(app.getHelperContact().isContactAddedByPhoneList(contact.getPhone()));
         softAssert.assertTrue(app.getHelperContact().getContactDetailsText(contact.getName()).contains(contact.getEmail()));
         softAssert.assertFalse(app.getHelperContact().isDescriptionBlank(contact.getName()));
+
+        logAssertDetails("1. contact addition by name " + contact.getName());
+        logAssertDetails("2. contact addition by phone " + contact.getPhone());
+        logAssertDetails("3. contact addition by name (list) " + contact.getName());
+        logAssertDetails("4. contact addition by phone (list) " + contact.getPhone());
+        logAssertDetails("5. contact addition by contact details " + contact.getName());
+        logAssertDetails("6. not blank description field by name " + contact.getName());
     }
 
     @Test
@@ -72,6 +85,8 @@ public class AddNewContactTests extends TestBase{
                 .address(address)
                 .build();
 
+        logContact(contact);
+
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
@@ -82,6 +97,13 @@ public class AddNewContactTests extends TestBase{
         softAssert.assertTrue(app.getHelperContact().isContactAddedByPhoneList(contact.getPhone()));
         softAssert.assertTrue(app.getHelperContact().getContactDetailsText(contact.getName()).contains(contact.getEmail()));
         softAssert.assertTrue(app.getHelperContact().isDescriptionBlank(contact.getName()));
+
+        logAssertDetails("1. contact addition by name " + contact.getName());
+        logAssertDetails("2. contact addition by phone " + contact.getPhone());
+        logAssertDetails("3. contact addition by name (list) " + contact.getName());
+        logAssertDetails("4. contact addition by phone (list) " + contact.getPhone());
+        logAssertDetails("5. contact addition by contact details " + contact.getName());
+        logAssertDetails("6. blank description field by name " + contact.getName());
     }
 
     //NEGATIVE
@@ -107,6 +129,8 @@ public class AddNewContactTests extends TestBase{
                 .description(description)
                 .build();
 
+        logContact(contact);
+
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().getScreen("src/test/screenshots/screen-1" + i + ".png");
@@ -114,6 +138,9 @@ public class AddNewContactTests extends TestBase{
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
+
+        logAssertDetails("1. Add page is displayed");
+        logAssertDetails("2. Number of contacts hasn't changed");
 
     }
 
@@ -140,8 +167,13 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
+        logContact(contact);
+
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
+
+        logAssertDetails("1. Add page is displayed");
+        logAssertDetails("2. Number of contacts hasn't changed");
     }
 
     @Test
@@ -167,8 +199,13 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
+        logContact(contact);
+
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
+
+        logAssertDetails("1. Add page is displayed");
+        logAssertDetails("2. Number of contacts hasn't changed");
     }
 
     @Test
@@ -194,9 +231,18 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
+        logContact(contact);
+
+        String alert = "Phone not valid:";
+
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
-        Assert.assertTrue(app.getHelperContact().isAlertPresent("Phone not valid:"));
+        Assert.assertTrue(app.getHelperContact().isAlertPresent(alert));
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
+
+        logAssertDetails("1. Add page is displayed");
+        logAssertDetails("2. " + alert + "is present");
+        logAssertDetails("3. Number of contacts hasn't changed");
+
     }
 
     @Test
@@ -223,9 +269,18 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
+        logContact(contact);
+
+        String alert = "Phone not valid:";
+
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
-        Assert.assertTrue(app.getHelperContact().isAlertPresent("Phone not valid:"));
+        Assert.assertTrue(app.getHelperContact().isAlertPresent(alert));
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
+
+        logAssertDetails("1. Add page is displayed");
+        logAssertDetails("2. " + alert + "is present");
+        logAssertDetails("3. Number of contacts hasn't changed");
+
     }
 
     @Test(enabled = false)
@@ -286,9 +341,17 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
+        logContact(contact);
+
+        String alert = "Email not valid:";
+
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
-        Assert.assertTrue(app.getHelperContact().isAlertPresent("Email not valid:"));
+        Assert.assertTrue(app.getHelperContact().isAlertPresent(alert));
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
+
+        logAssertDetails("1. Add page is displayed");
+        logAssertDetails("2. " + alert + "is present");
+        logAssertDetails("3. Number of contacts hasn't changed");
     }
 
     @AfterMethod

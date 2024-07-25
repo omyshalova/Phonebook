@@ -6,7 +6,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Method;
+
 public class RegistrationTests extends TestBase{
+
 
     @BeforeClass
     public void logClassActions(){
@@ -19,7 +22,6 @@ public class RegistrationTests extends TestBase{
             app.getHelperUser().logout();
             logger.info("Precondition method was done: logged out of the system");
         }
-        logger.info("Precondition: not logged in the system");
     }
 
     //Positive tests
@@ -31,19 +33,20 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith" + i + "@gmail.com")
                 .withPassword("Smith1235813!");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
 
+        String message = "No Contacts here!";
+
         Assert.assertTrue(app.getHelperUser().isRegistered());
-        Assert.assertEquals(app.getHelperUser().getMessage() ,"No Contacts here!");
+        Assert.assertEquals(app.getHelperUser().getMessage() ,message);
         Assert.assertTrue(app.getHelperUser().isNoContactMessagePresent());
 
-        logger.info("Assert1: Contact button is present");
-        logger.info("Assert2: Message 'No Contacts here!' is present");
-
+        logAssertDetails("1. Contact button is present");
+        logAssertDetails("2. " + message + " is present");
     }
 
     @Test
@@ -54,7 +57,7 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith" + i + "@gmail.com")
                 .withPassword("Smith1235813!");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -62,9 +65,8 @@ public class RegistrationTests extends TestBase{
 
         Assert.assertTrue(app.getHelperUser().isRegistered());
 
-        logger.info("Assert: Contact button is present");
-
-    }
+        logAssertDetails("Contact button is present");
+            }
 
     @Test(description = "Bug report #1234")//, enabled = false)
     public void registrationWrongEmail(){
@@ -72,11 +74,16 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smithgmail.com")
                 .withPassword("Smith1235813!");
 
+        logData(user);
+
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
 
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+        String alert = "Wrong email or password";
+        Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
+
+        logAssertDetails(alert + " is present");
     }
 
     @Test
@@ -85,11 +92,18 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith@gmail.com")
                 .withPassword("Smith123");
 
+        logData(user);
+
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
 
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+        String alert = "Wrong email or password";
+
+        Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
+
+        logAssertDetails(alert + "present");
+
     }
 
     @Test
@@ -98,12 +112,16 @@ public class RegistrationTests extends TestBase{
                 .withEmail("testolga@gmail.com")
                 .withPassword("Test1101!");
 
+        logData(user);
+
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
 
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("User already exist"));
+        String alert = "User already exist";
+
+        Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
+
+        logAssertDetails(alert + " is present");
     }
-
-
 }

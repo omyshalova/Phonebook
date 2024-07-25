@@ -1,6 +1,7 @@
 package manager;
 
 import com.google.common.io.Files;
+import models.User;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -88,4 +89,6 @@ public class HelperBase {
             throw new RuntimeException(e);
         }
     }
+
+
 }

@@ -22,7 +22,6 @@ public class LoginTests extends TestBase{
             app.getHelperUser().logout();
             logger.info("Precondition method was done: logged out of the system");
         }
-        logger.info("Precondition: not logged in the system");
     }
 
     //Positive Tests
@@ -33,7 +32,7 @@ public class LoginTests extends TestBase{
                 .withEmail("testolga@gmail.com")
                 .withPassword("Test1101!");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
@@ -41,7 +40,8 @@ public class LoginTests extends TestBase{
 
         Assert.assertTrue(app.getHelperUser().isLogged());
 
-        logger.info("Assert: SignOut button is present");
+        logAssertDetails("SignOut button is present");
+
     }
 
     @Test
@@ -50,7 +50,7 @@ public class LoginTests extends TestBase{
                 .withEmail("testolga@gmail.com")
                 .withPassword("Test1101!");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
@@ -58,7 +58,7 @@ public class LoginTests extends TestBase{
 
         Assert.assertTrue(app.getHelperUser().isLogged());
 
-        logger.info("Assert: SignOut button is present");
+        logAssertDetails("SignOut button is present");
     }
 
     // Negative Tests
@@ -69,15 +69,17 @@ public class LoginTests extends TestBase{
                 .withEmail("testolgagmail.com")
                 .withPassword("Test1101!");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+        String alert = "Wrong email or password";
 
-        logger.info("Assert: Alert 'Wrong email or password' is present");
+        Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
+
+        logAssertDetails(alert + " alert is present");
     }
 
     @Test
@@ -86,15 +88,17 @@ public class LoginTests extends TestBase{
                 .withEmail("testolga@gmail.com")
                 .withPassword("Test");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+        String alert = "Wrong email or password";
 
-        logger.info("Assert: Alert 'Wrong email or password' is present");
+        Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
+
+        logAssertDetails(alert + " alert is present");
 
     }
 
@@ -104,14 +108,17 @@ public class LoginTests extends TestBase{
                 .withEmail("tutu@gmail.com")
                 .withPassword("Tutu1101!");
 
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+        logData(user);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+        String alert = "Wrong email or password";
 
-        logger.info("Assert: Alert 'Wrong email or password' is present");
+        Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
+
+        logAssertDetails(alert + " alert is present");
+
     }
 }
