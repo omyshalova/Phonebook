@@ -136,8 +136,57 @@ public class HelperContact extends HelperBase{
         }
     }
 
-    public String getFirstContactName(){
-        openContacts();
-        return wd.findElement(By.xpath("(//h2)[1]")).getText();
+    //CW
+
+    public int removeOneContact() {
+        int before = contactCounter();
+        logger.info("Number of contacts before removal is: {}", before);
+        removeContact();
+        int after = contactCounter();
+        logger.info("Number of contacts after removal is: {}", after);
+        return before - after;
     }
+
+    private void removeContact() {
+        click(By.cssSelector(".contact-item_card__2SOIM"));
+        click(By.xpath("//button[normalize-space()='Remove']"));
+        pause(1000);
+    }
+
+    private int contactCounter() {
+        return wd.findElements(By.cssSelector(".contact-item_card__2SOIM")).size();
+    }
+
+    public void removeAllContactsCW(){
+        while (contactCounter()!=0){
+            removeContact();
+        }
+    }
+
+    public void providerContact() {
+        if(contactCounter()<3){
+            for (int i = 0; i < 3; i++) {
+                addOneContact();
+            }
+        }
+    }
+
+    private void addOneContact() {
+        Faker faker = new Faker();
+        Contact contact = Contact.builder()
+                .Name(faker.name().firstName())
+                .lastName(faker.name().lastName())
+                .phone(String.valueOf(faker.number().randomNumber(11, true)))
+                .email((faker.name().firstName()).toLowerCase()+"."+(faker.name().lastName()).toLowerCase()+"@gmail.com")
+                .address(faker.address().streetAddress())
+                .description(faker.company().name())
+                .build();
+
+        openContactForm();
+        fillContactForm(contact);
+        saveContact();
+        pause(500);
+    }
+
+
 }

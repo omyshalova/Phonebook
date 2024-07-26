@@ -29,7 +29,7 @@ public class TestBase {
 
     @AfterMethod
     public void endLogger(Method m){
-        logger.info("End: {}", m.getName());
+        logger.info("************************************************************************************");
     }
 
     @AfterSuite

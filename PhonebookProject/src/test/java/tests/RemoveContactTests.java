@@ -13,12 +13,24 @@ public class RemoveContactTests extends TestBase{
     public void preCondition(){
         if (!app.getHelperUser().isLogged()){
             app.getHelperUser().login(new User().withEmail("testolga@gmail.com").withPassword("Test1101!"));
+            logger.info("Precondition method was done: logged in the system");
         }
-        app.getHelperContact().openContacts();
-        if (app.getHelperContact().countAllCounts() == 0){
-            app.getHelperContact().addContactsByNumber(3);
-        }
+//        app.getHelperContact().openContacts();
+//        if (app.getHelperContact().countAllCounts() == 0){
+//            app.getHelperContact().addContactsByNumber(3);
+//
+//        }
+
+        app.getHelperContact().providerContact();
+        logger.info("Precondition: logged in the system");
     }
+
+    @AfterMethod
+    public void postCondition(){
+        app.getHelperContact().returnToHomePage();
+        app.getHelperContact().openContacts();
+    }
+
 
     @Test
     public void removeFirstContact(){
@@ -27,6 +39,8 @@ public class RemoveContactTests extends TestBase{
 
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContacts-1);
     }
+
+
 
     @Test
     public void removeAllContacts(){
@@ -38,9 +52,19 @@ public class RemoveContactTests extends TestBase{
         Assert.assertTrue(app.getHelperContact().isElementPresent(By.xpath("//h1[text()=' No Contacts here!']")));
     }
 
-    @AfterMethod
-    public void postCondition(){
-        app.getHelperContact().returnToHomePage();
-        app.getHelperContact().openContacts();
+    //CW
+
+    @Test
+    public void removeFirstContactCW(){
+        Assert.assertEquals(app.getHelperContact().removeOneContact(),1);
     }
+
+    @Test
+    public void removeAllContactsCW(){
+        app.getHelperContact().removeAllContactsCW();
+        Assert.assertTrue(app.getHelperUser().isNoContactMessagePresent());
+    }
+
+
+
 }
