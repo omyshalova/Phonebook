@@ -37,8 +37,8 @@ public class TestBase {
         app.stop();
     }
 
-    public void logData(User user) {
-        logger.info("Test data: email - {} & password - {}", user.getEmail(), user.getPassword());
+    public void logData(String email, String password) {
+        logger.info("Test data: email - {} & password - {}", email, password);
     }
 
     public void logAssertDetails(String text){

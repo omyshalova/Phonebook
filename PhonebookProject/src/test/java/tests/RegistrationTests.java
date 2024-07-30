@@ -33,7 +33,7 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith" + i + "@gmail.com")
                 .withPassword("Smith1235813!");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -57,7 +57,7 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith" + i + "@gmail.com")
                 .withPassword("Smith1235813!");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -74,7 +74,7 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smithgmail.com")
                 .withPassword("Smith1235813!");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -92,7 +92,7 @@ public class RegistrationTests extends TestBase{
                 .withEmail("smith@gmail.com")
                 .withPassword("Smith123");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -112,7 +112,7 @@ public class RegistrationTests extends TestBase{
                 .withEmail("testolga@gmail.com")
                 .withPassword("Test1101!");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);

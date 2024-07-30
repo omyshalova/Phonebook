@@ -44,7 +44,6 @@ public class ListenerWD extends AbstractWebDriverEventListener {
         logger.info("start method click {}", element.getText());
     }
 
-
     @Override
     public void afterClickOn(WebElement element, WebDriver driver) {
         super.afterClickOn(element, driver);

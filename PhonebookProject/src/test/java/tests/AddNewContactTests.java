@@ -1,6 +1,8 @@
 package tests;
 
 import com.github.javafaker.Faker;
+import manager.DataProviderContact;
+import manager.DataProviderUser;
 import models.Contact;
 import models.User;
 import org.testng.Assert;
@@ -28,24 +30,8 @@ public class AddNewContactTests extends TestBase{
 
     //POSITIVE
 
-    @Test
-    public void addNewContactSuccessAll(){
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
-
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
+    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class)
+    public void addNewContactSuccessAll(Contact contact){
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
@@ -208,28 +194,9 @@ public class AddNewContactTests extends TestBase{
         logAssertDetails("2. Number of contacts hasn't changed");
     }
 
-    @Test
-    public void addNewContactEmptyPhone(){
+    @Test(dataProvider = "contactEmptyPhone", dataProviderClass = DataProviderContact.class)
+    public void addNewContactEmptyPhone(Contact contact){
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = "";
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
-
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
-        app.getHelperContact().openContactForm();
-        app.getHelperContact().fillContactForm(contact);
-        app.getHelperContact().saveContact();
 
         logContact(contact);
 

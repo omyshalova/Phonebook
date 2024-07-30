@@ -1,13 +1,16 @@
 package tests;
 
 import manager.ApplicationManager;
+import manager.DataProviderUser;
 import models.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
+import java.util.*;
 
 public class LoginTests extends TestBase{
 
@@ -26,16 +29,16 @@ public class LoginTests extends TestBase{
 
     //Positive Tests
 
-    @Test
-    public void loginSuccess(){
-        User user = new User()
-                .withEmail("testolga@gmail.com")
-                .withPassword("Test1101!");
+    @Test(dataProvider = "loginData", dataProviderClass = DataProviderUser.class)
+    public void loginSuccess(String email, String password){
+//        User user = new User()
+//                .withEmail("testolga@gmail.com")
+//                .withPassword("Test1101!");
 
-        logData(user);
+        logData(email, password);
 
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
+        app.getHelperUser().fillLoginRegistrationForm(email, password);
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isLogged());
@@ -44,13 +47,10 @@ public class LoginTests extends TestBase{
 
     }
 
-    @Test
-    public void loginSuccessModel(){
-        User user = new User()
-                .withEmail("testolga@gmail.com")
-                .withPassword("Test1101!");
+    @Test(dataProvider = "loginModels", dataProviderClass = DataProviderUser.class)
+    public void loginSuccessModel(User user){
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
@@ -69,7 +69,7 @@ public class LoginTests extends TestBase{
                 .withEmail("testolgagmail.com")
                 .withPassword("Test1101!");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
@@ -88,7 +88,7 @@ public class LoginTests extends TestBase{
                 .withEmail("testolga@gmail.com")
                 .withPassword("Test");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
@@ -108,7 +108,7 @@ public class LoginTests extends TestBase{
                 .withEmail("tutu@gmail.com")
                 .withPassword("Tutu1101!");
 
-        logData(user);
+        logData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
