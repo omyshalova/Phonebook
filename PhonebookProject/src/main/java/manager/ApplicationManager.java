@@ -30,7 +30,7 @@ public class ApplicationManager {
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.navigate().to("https://telranedu.web.app/home");
 
-        logger.info("The link: " + wd.getCurrentUrl());
+        logger.info("The initial link: " + wd.getCurrentUrl());
 
         helperUser = new HelperUser(wd);
         helperContact = new HelperContact(wd);

@@ -2,7 +2,6 @@ package tests;
 
 import com.github.javafaker.Faker;
 import manager.DataProviderContact;
-import manager.DataProviderUser;
 import models.Contact;
 import models.User;
 import org.testng.Assert;
@@ -19,7 +18,7 @@ public class AddNewContactTests extends TestBase{
 
     @BeforeClass
     public void preCondition(){
-        logger.info("Actions: open, fill, save contact form");
+        logger.info("   Preconditions:");
         if (!app.getHelperUser().isLogged()){
             app.getHelperUser().login(new User().withEmail("testolga@gmail.com").withPassword("Test1101!"));
             logger.info("Precondition method was done: logged in the system");
@@ -27,17 +26,16 @@ public class AddNewContactTests extends TestBase{
         logger.info("Precondition: logged in the system");
     }
 
-
     //POSITIVE
 
-    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class)
+    @Test(dataProvider = "addNewContactPositiveAll", dataProviderClass = DataProviderContact.class)
     public void addNewContactSuccessAll(Contact contact){
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
-        logContact(contact);
+        logContactData(contact);
 
         softAssert.assertTrue(app.getHelperContact().isContactAddedByName(contact.getName()));
         softAssert.assertTrue(app.getHelperContact().isContactAddedByPhone(contact.getPhone()));
@@ -54,24 +52,10 @@ public class AddNewContactTests extends TestBase{
         logAssertDetails("6. not blank description field by name " + contact.getName());
     }
 
-    @Test
-    public void addNewContactSuccessRequiredFields(){
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
+    @Test(dataProvider = "addNewContactPositiveRequired", dataProviderClass = DataProviderContact.class)
+    public void addNewContactSuccessRequiredFields(Contact contact){
 
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .build();
-
-        logContact(contact);
+        logContactData(contact);
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
@@ -94,28 +78,12 @@ public class AddNewContactTests extends TestBase{
 
     //NEGATIVE
 
-    @Test
-    public void addNewContactEmptyName(){
+    @Test(dataProvider = "addContactNegativeName", dataProviderClass = DataProviderContact.class)
+    public void addNewContactNegative_Name(Contact contact){
         int i = new Random().nextInt(1000);
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-        Faker faker = new Faker();
-        String firstName = "";
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
 
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
-
-        logContact(contact);
+        logContactData(contact);
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
@@ -130,30 +98,15 @@ public class AddNewContactTests extends TestBase{
 
     }
 
-    @Test
-    public void addNewContactEmptyLastName(){
+    @Test(dataProvider = "addContactNegativeLastName", dataProviderClass = DataProviderContact.class)
+    public void addNewContactNegative_LastName(Contact contact){
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = "";
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = firstName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
 
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
-        logContact(contact);
+        logContactData(contact);
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
@@ -162,30 +115,15 @@ public class AddNewContactTests extends TestBase{
         logAssertDetails("2. Number of contacts hasn't changed");
     }
 
-    @Test
-    public void addNewContactEmptyAddress(){
+    @Test(dataProvider = "addContactNegativeAddress", dataProviderClass = DataProviderContact.class)
+    public void addNewContactNegative_Address(Contact contact){
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = "";
-        String description = faker.company().name();
 
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
-        logContact(contact);
+        logContactData(contact);
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
@@ -194,49 +132,15 @@ public class AddNewContactTests extends TestBase{
         logAssertDetails("2. Number of contacts hasn't changed");
     }
 
-    @Test(dataProvider = "contactEmptyPhone", dataProviderClass = DataProviderContact.class)
-    public void addNewContactEmptyPhone(Contact contact){
+    @Test(dataProvider = "addContactNegativePhone", dataProviderClass = DataProviderContact.class)
+    public void addNewContactNegative_Phone(Contact contact){
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-
-        logContact(contact);
-
-        String alert = "Phone not valid:";
-
-        Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
-        Assert.assertTrue(app.getHelperContact().isAlertPresent(alert));
-        Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
-
-        logAssertDetails("1. Add page is displayed");
-        logAssertDetails("2. " + alert + "is present");
-        logAssertDetails("3. Number of contacts hasn't changed");
-
-    }
-
-    @Test
-    public void addNewContactWrongPhoneFormat(){
-        int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(7, true));
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
-
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
-        logContact(contact);
+        logContactData(contact);
 
         String alert = "Phone not valid:";
 
@@ -284,31 +188,15 @@ public class AddNewContactTests extends TestBase{
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
     }
 
-    @Test
-    public void addNewContactWrongEmailFormat(){
+    @Test(dataProvider = "addContactNegativeEmail", dataProviderClass = DataProviderContact.class)
+    public void addNewContactNegative_Email(Contact contact){
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
-
-        Contact contact = Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
-                .build();
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().saveContact();
 
-        logContact(contact);
+        logContactData(contact);
 
         String alert = "Email not valid:";
 

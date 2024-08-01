@@ -2,7 +2,6 @@ package tests;
 
 import manager.ApplicationManager;
 import models.Contact;
-import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -22,6 +21,11 @@ public class TestBase {
         app.init();
     }
 
+    @AfterSuite
+    public void tearDown(){
+        app.stop();
+    }
+
     @BeforeMethod
     public void startLogger(Method m){
         logger.info("   Start:{} ({})", m.getName(), m.toGenericString());
@@ -32,20 +36,11 @@ public class TestBase {
         logger.info("************************************************************************************");
     }
 
-    @AfterSuite
-    public void tearDown(){
-        app.stop();
-    }
-
-    public void logData(String email, String password) {
+    public void logUserData(String email, String password) {
         logger.info("Test data: email - {} & password - {}", email, password);
     }
 
-    public void logAssertDetails(String text){
-        logger.info("Assert: {}", text);
-    }
-
-    public void logContact(Contact contact) {
+    public void logContactData(Contact contact) {
         logger.info("Test data: " +
                         "name - {}, " +
                         "last name - {}, " +
@@ -60,6 +55,12 @@ public class TestBase {
                 contact.getAddress(),
                 contact.getDescription());
     }
+
+    public void logAssertDetails(String text){
+        logger.info("Assert: {}", text);
+    }
+
+
 
 
 }

@@ -13,104 +13,237 @@ public class DataProviderContact {
     @DataProvider
     public Iterator<Object[]> example(){
         List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{});//object to be added
         return list.iterator();
     }
 
     @DataProvider
-    public Iterator<Object[]> contactSuccess(){
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = String.valueOf(faker.number().randomNumber(11, true));
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
-
-        Faker faker1 = new Faker();
-        String firstName1 = faker.name().firstName();
-        String lastName1 = faker.name().lastName();
-        String phone1 = String.valueOf(faker.number().randomNumber(11, true));
-        String email1 = firstName1.toLowerCase()+"."+lastName1.toLowerCase()+"@gmail.com";
-        String address1 = faker.address().streetAddress();
-        String description1 = faker.company().name();
-
+    public Iterator<Object[]> addNewContactPositiveAll(){
         List<Object[]> list = new ArrayList<>();
         list.add(new Object[]{Contact.builder()
-                .Name(firstName1)
-                .lastName(lastName1)
-                .phone(phone1)
-                .email(email1)
-                .address(address1)
-                .description(description1)
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
                 .build()});
 
         list.add(new Object[]{Contact.builder()
-                .Name(firstName1)
-                .lastName(lastName1)
-                .phone(phone1)
-                .email(email1)
-                .address(address1)
-                .description(description1)
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});
+
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});
+
+        return list.iterator();
+    }
+    @DataProvider
+    public Iterator<Object[]> addNewContactPositiveRequired(){
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .build()});
+
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .build()});
+
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
                 .build()});
 
         return list.iterator();
     }
 
     @DataProvider
-    public Iterator<Object[]> contactEmptyPhone(){
+    public Iterator<Object[]> addContactNegativePhone(){
         List<Object[]> list = new ArrayList<>();
-
-        Faker faker = new Faker();
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = "wwwwwwwwww";
-        String email = firstName.toLowerCase()+"."+lastName.toLowerCase()+"@gmail.com";
-        String address = faker.address().streetAddress();
-        String description = faker.company().name();
-
-        Faker faker1 = new Faker();
-        String firstName1 = faker.name().firstName();
-        String lastName1 = faker.name().lastName();
-        String phone1 = "";
-        String email1 = firstName1.toLowerCase()+"."+lastName1.toLowerCase()+"@gmail.com";
-        String address1 = faker.address().streetAddress();
-        String description1 = faker.company().name();
-
-        Faker faker2 = new Faker();
-        String firstName2 = faker.name().firstName();
-        String lastName2 = faker.name().lastName();
-        String phone2 = String.valueOf(faker.number().randomNumber(6, true));;
-        String email2 = firstName2.toLowerCase()+"."+lastName2.toLowerCase()+"@gmail.com";
-        String address2 = faker.address().streetAddress();
-        String description2 = faker.company().name();
-
+        //short phone number
         list.add(new Object[]{Contact.builder()
-                .Name(firstName)
-                .lastName(lastName)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .description(description)
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(5,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
                 .build()});
 
+        //letter instead of numbers
         list.add(new Object[]{Contact.builder()
-                .Name(firstName1)
-                .lastName(lastName1)
-                .phone(phone1)
-                .email(email1)
-                .address(address1)
-                .description(description1)
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone("www")
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
                 .build()});
 
+        //empty phone field
         list.add(new Object[]{Contact.builder()
-                .Name(firstName2)
-                .lastName(lastName2)
-                .phone(phone2)
-                .email(email2)
-                .address(address2)
-                .description(description2)
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone("")
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});
+
+        //long phone number
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(17,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
                 .build()});
 
         return list.iterator();
     }
+
+    @DataProvider
+    public Iterator<Object[]> addContactNegativeName(){
+        List<Object[]> list = new ArrayList<>();
+        //empty name
+        list.add(new Object[]{Contact.builder()
+                .Name("")
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name("")
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name("")
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        return list.iterator();
+    }
+
+    @DataProvider
+    public Iterator<Object[]> addContactNegativeLastName(){
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName("")
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName("")
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName("")
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        return list.iterator();
+    }
+
+    @DataProvider
+    public Iterator<Object[]> addContactNegativeAddress(){
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address("")
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address("")
+                .description(new Faker().company().name())
+                .build()});
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "@gmail.com")
+                .address("")
+                .description(new Faker().company().name())
+                .build()});
+        return list.iterator();
+    }
+
+    @DataProvider
+    public Iterator<Object[]> addContactNegativeEmail(){
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        list.add(new Object[]{Contact.builder()
+                .Name(new Faker().name().firstName())
+                .lastName(new Faker().name().lastName())
+                .phone(String.valueOf(new Faker().number().randomNumber(11,true)))
+                .email(new Faker().name().firstName().toLowerCase() + new Faker().name().lastName() + "gmail.com")
+                .address(new Faker().address().streetAddress())
+                .description(new Faker().company().name())
+                .build()});//object to be added
+        return list.iterator();
+    }
+
 }

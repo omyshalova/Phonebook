@@ -27,8 +27,8 @@ public class HelperBase {
         WebElement element = wd.findElement(locator);
         element.click();
         element.clear();
-        clearNew(element);
-        clearTextField(locator);
+//        clearNew(element);
+        clearTextField(element);
         if (text!=null) {
             element.sendKeys(text);
         }
@@ -39,8 +39,8 @@ public class HelperBase {
         element.sendKeys(Keys.BACK_SPACE);
     }
 
-    public void clearTextField(By locator){
-        WebElement element = wd.findElement(locator);
+    public void clearTextField(WebElement element){
+//        WebElement element = wd.findElement(locator);
         String os = System.getProperty("os.name");
         if (os.startsWith("Win")){
             element.sendKeys(Keys.chord(Keys.CONTROL, "a"));

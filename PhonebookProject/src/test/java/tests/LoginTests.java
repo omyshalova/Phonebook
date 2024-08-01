@@ -1,16 +1,11 @@
 package tests;
 
-import manager.ApplicationManager;
 import manager.DataProviderUser;
 import models.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.lang.reflect.Method;
-import java.util.*;
 
 public class LoginTests extends TestBase{
 
@@ -29,96 +24,69 @@ public class LoginTests extends TestBase{
 
     //Positive Tests
 
-    @Test(dataProvider = "loginData", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "loginPositive", dataProviderClass = DataProviderUser.class)
     public void loginSuccess(String email, String password){
-//        User user = new User()
-//                .withEmail("testolga@gmail.com")
-//                .withPassword("Test1101!");
-
-        logData(email, password);
+        logUserData(email, password);
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(email, password);
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isLogged());
-
         logAssertDetails("SignOut button is present");
 
     }
 
-    @Test(dataProvider = "loginModels", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "loginPositiveModels", dataProviderClass = DataProviderUser.class)
     public void loginSuccessModel(User user){
-
-        logData(user.getEmail(), user.getPassword());
+        logUserData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isLogged());
-
         logAssertDetails("SignOut button is present");
     }
 
     // Negative Tests
 
-    @Test
-    public void loginWrongEmail(){
-        User user = new User()
-                .withEmail("testolgagmail.com")
-                .withPassword("Test1101!");
-
-        logData(user.getEmail(), user.getPassword());
+    @Test(dataProvider = "loginNegativeEmail", dataProviderClass = DataProviderUser.class)
+    public void loginWrongEmail(User user){
+        logUserData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
         String alert = "Wrong email or password";
-
         Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
-
         logAssertDetails(alert + " alert is present");
     }
 
-    @Test
-    public void loginWrongPassword(){
-        User user = new User()
-                .withEmail("testolga@gmail.com")
-                .withPassword("Test");
-
-        logData(user.getEmail(), user.getPassword());
+    @Test(dataProvider = "loginNegativePassword", dataProviderClass = DataProviderUser.class)
+    public void loginWrongPassword(User user){
+        logUserData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
         String alert = "Wrong email or password";
-
         Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
-
         logAssertDetails(alert + " alert is present");
-
     }
 
-    @Test
-    public void  loginUnregisteredUser(){
-        User user = new User()
-                .withEmail("tutu@gmail.com")
-                .withPassword("Tutu1101!");
-
-        logData(user.getEmail(), user.getPassword());
+    @Test(dataProvider = "loginNegativeUnregisteredUser", dataProviderClass = DataProviderUser.class)
+    public void  loginUnregisteredUser(User user){
+        logUserData(user.getEmail(), user.getPassword());
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
         app.getHelperUser().submitLogin();
 
         String alert = "Wrong email or password";
-
         Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
-
         logAssertDetails(alert + " alert is present");
-
     }
 }
