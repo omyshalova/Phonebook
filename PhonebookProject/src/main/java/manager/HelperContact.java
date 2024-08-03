@@ -5,7 +5,7 @@ import models.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class HelperContact extends HelperBase{
@@ -116,7 +116,7 @@ public class HelperContact extends HelperBase{
     public void addContact(){
         Faker faker = new Faker();
         Contact contact = Contact.builder()
-                .Name(faker.name().firstName())
+                .name(faker.name().firstName())
                 .lastName(faker.name().lastName())
                 .phone(String.valueOf(faker.number().randomNumber(11, true)))
                 .email((faker.name().firstName()).toLowerCase()+"."+(faker.name().lastName()).toLowerCase()+"@gmail.com")
@@ -174,7 +174,7 @@ public class HelperContact extends HelperBase{
     private void addOneContact() {
         Faker faker = new Faker();
         Contact contact = Contact.builder()
-                .Name(faker.name().firstName())
+                .name(faker.name().firstName())
                 .lastName(faker.name().lastName())
                 .phone(String.valueOf(faker.number().randomNumber(11, true)))
                 .email((faker.name().firstName()).toLowerCase()+"."+(faker.name().lastName()).toLowerCase()+"@gmail.com")

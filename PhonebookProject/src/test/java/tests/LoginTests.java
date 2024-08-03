@@ -89,4 +89,16 @@ public class LoginTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
         logAssertDetails(alert + " alert is present");
     }
+
+    @Test(dataProvider = "loginFile", dataProviderClass = DataProviderUser.class)
+    public void loginSuccessModelDP(User user){
+        logUserData(user.getEmail(), user.getPassword());
+
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm(user.getEmail(), user.getPassword());
+        app.getHelperUser().submitLogin();
+
+        Assert.assertTrue(app.getHelperUser().isLogged());
+        logAssertDetails("SignOut button is present");
+    }
 }

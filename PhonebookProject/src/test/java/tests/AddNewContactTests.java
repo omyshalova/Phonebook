@@ -172,7 +172,7 @@ public class AddNewContactTests extends TestBase{
         String description = faker.company().name();
 
         Contact contact = Contact.builder()
-                .Name(firstName)
+                .name(firstName)
                 .lastName(lastName)
                 .phone(phone)
                 .email(email)
@@ -207,6 +207,24 @@ public class AddNewContactTests extends TestBase{
         logAssertDetails("1. Add page is displayed");
         logAssertDetails("2. " + alert + "is present");
         logAssertDetails("3. Number of contacts hasn't changed");
+    }
+
+    @Test(dataProvider = "contactCSV", dataProviderClass = DataProviderContact.class)
+    public void addNewContactSuccessAllDP(Contact contact){
+
+        app.getHelperContact().openContactForm();
+        app.getHelperContact().fillContactForm(contact);
+        app.getHelperContact().saveContact();
+
+        logContactData(contact);
+
+        softAssert.assertTrue(app.getHelperContact().isContactAddedByName(contact.getName()));
+        softAssert.assertTrue(app.getHelperContact().isContactAddedByPhone(contact.getPhone()));
+
+
+        logAssertDetails("1. contact addition by name " + contact.getName());
+        logAssertDetails("2. contact addition by phone " + contact.getPhone());
+
     }
 
     @AfterMethod
