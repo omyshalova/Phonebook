@@ -51,7 +51,8 @@ public class LoginTests extends TestBase{
 
     // Negative Tests
 
-    @Test(dataProvider = "loginNegativeEmail", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "loginNegativeEmail", dataProviderClass = DataProviderUser.class,
+            groups = {"smoke"})
     public void loginWrongEmail(User user){
         logUserData(user.getEmail(), user.getPassword());
 

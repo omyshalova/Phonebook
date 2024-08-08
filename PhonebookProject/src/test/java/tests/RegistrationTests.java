@@ -79,7 +79,7 @@ public class RegistrationTests extends TestBase{
         logAssertDetails(alert + " is present");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void registrationWrongPassword(){
         User user = new User()
                 .withEmail("smith@gmail.com")

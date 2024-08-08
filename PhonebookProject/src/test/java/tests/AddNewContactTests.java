@@ -188,7 +188,8 @@ public class AddNewContactTests extends TestBase{
         Assert.assertEquals(app.getHelperContact().countAllCounts(), numberOfContactsBefore);
     }
 
-    @Test(dataProvider = "addContactNegativeEmail", dataProviderClass = DataProviderContact.class)
+    @Test(dataProvider = "addContactNegativeEmail", dataProviderClass = DataProviderContact.class,
+            groups = {"smoke"})
     public void addNewContactNegative_Email(Contact contact){
         int numberOfContactsBefore = app.getHelperContact().countAllCounts();
 

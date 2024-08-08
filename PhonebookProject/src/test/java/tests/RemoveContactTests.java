@@ -32,7 +32,7 @@ public class RemoveContactTests extends TestBase{
     }
 
 
-    @Test
+    @Test(groups = {"smoke"})
     public void removeFirstContact(){
         int numberOfContacts = app.getHelperContact().countAllCounts();
         app.getHelperContact().removeFirstContact();

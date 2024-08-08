@@ -2,6 +2,7 @@ package tests;
 
 import manager.ApplicationManager;
 import models.Contact;
+import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -13,7 +14,7 @@ import java.lang.reflect.Method;
 
 public class TestBase {
 
-    static ApplicationManager app = new ApplicationManager();
+    static ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
     @BeforeSuite
@@ -21,7 +22,7 @@ public class TestBase {
         app.init();
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void tearDown(){
         app.stop();
     }
