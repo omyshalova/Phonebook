@@ -9,12 +9,12 @@ import org.testng.annotations.Test;
 
 public class LoginTests extends TestBase{
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void logClassActions(){
         logger.info("Actions: open, fill, submit login form");
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition(){
         if(app.getHelperUser().isLogged()){
             app.getHelperUser().logout();

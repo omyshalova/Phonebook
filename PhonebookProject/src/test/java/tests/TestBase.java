@@ -17,7 +17,7 @@ public class TestBase {
     static ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void setApp(){
         app.init();
     }
@@ -27,12 +27,12 @@ public class TestBase {
         app.stop();
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void startLogger(Method m){
         logger.info("   Start:{} ({})", m.getName(), m.toGenericString());
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void endLogger(Method m){
         logger.info("************************************************************************************");
     }

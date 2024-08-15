@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     implementation group: 'org.testng', name: 'testng', version: '7.4.0'
 
@@ -19,9 +20,8 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 
-    implementation 'com.github.javafaker:javafaker:1.0.2'
-
     implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'com.github.javafaker:javafaker:0.15'
 
 }
 
@@ -29,34 +29,39 @@ test {
     useTestNG()
 }
 
-task qa(type:Test){
-    useTestNG(){
+tasks.register('qa', Test) {
+    useTestNG() {
 
         def suite = System.getProperty('suite', '')
 
-        if (suite.equals('quick')) {
+        if (suite == 'quick') {
             suites 'src/test/resources/quick.xml'
-        } else if (suite.equals('login')) {
+        } else if (suite == 'login') {
             suites 'src/test/resources/login.xml'
         } else {
             suites 'src/test/resources/testng.xml'
         }
     }
 
-    if(project.hasProperty('browser')){
+    if (project.hasProperty('browser')) {
         systemProperty 'browser',
                 "${browser}"
     }
 }
 
-task group(type: Test){
-    useTestNG(){
+tasks.register('group', Test) {
+    useTestNG() {
         suites 'src/test/resources/group.xml'
+    }
+
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser',
+                "${browser}"
     }
 }
 
-task team(type:Test){
-    useTestNG(){
+tasks.register('team', Test) {
+    useTestNG() {
 
         def groups = System.getProperty('groups')
 
@@ -66,4 +71,3 @@ task team(type:Test){
         suites 'src/test/resources/base.xml'
     }
 }
-
