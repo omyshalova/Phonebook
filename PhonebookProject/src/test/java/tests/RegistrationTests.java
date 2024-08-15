@@ -10,12 +10,12 @@ import org.testng.annotations.Test;
 public class RegistrationTests extends TestBase{
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void logClassActions(){
         logger.info("Actions: open, fill, submit registration form");
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition() {
         if (app.getHelperUser().isLogged()) {
             app.getHelperUser().logout();
@@ -79,8 +79,8 @@ public class RegistrationTests extends TestBase{
         logAssertDetails(alert + " is present");
     }
 
-    @Test(groups = {"smoke"})
-    public void registrationWrongPassword(){
+    @Test()
+    public void registrationWrongPassword1(){
         User user = new User()
                 .withEmail("smith@gmail.com")
                 .withPassword("Smith123");
@@ -92,11 +92,9 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().submitRegistration();
 
         String alert = "Wrong email or password";
-
         Assert.assertTrue(app.getHelperUser().isAlertPresent(alert));
 
-        logAssertDetails(alert + "present");
-
+        logAssertDetails(alert + " is present");
     }
 
     @Test

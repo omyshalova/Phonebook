@@ -16,7 +16,7 @@ public class AddNewContactTests extends TestBase{
 
     SoftAssert softAssert = new SoftAssert();
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void preCondition(){
         logger.info("   Preconditions:");
         if (!app.getHelperUser().isLogged()){
@@ -228,7 +228,7 @@ public class AddNewContactTests extends TestBase{
 
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void postCondition(){
         app.getHelperContact().returnToHomePage();
         app.getHelperContact().openContacts();

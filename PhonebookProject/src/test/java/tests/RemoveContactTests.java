@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class RemoveContactTests extends TestBase{
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition(){
         if (!app.getHelperUser().isLogged()){
             app.getHelperUser().login(new User().withEmail("testolga@gmail.com").withPassword("Test1101!"));
@@ -25,7 +25,7 @@ public class RemoveContactTests extends TestBase{
         logger.info("Precondition: logged in the system");
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void postCondition(){
         app.getHelperContact().returnToHomePage();
         app.getHelperContact().openContacts();
