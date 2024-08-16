@@ -1,2 +1,0 @@
-# Phonebook
-TelRan Phonebook project
